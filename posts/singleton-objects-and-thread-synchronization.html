@@ -5,32 +5,37 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
         <link href="../static/css/styles.css" rel="stylesheet" />
-        <style>
-            .gist {
-                min-width: 1024px;
-            }
-        </style>
+        <link href="../static/css/gist-dark-mode.css" rel="stylesheet" />
     </head>
     <body class="container">
-        <div class="d-flex justify-content-center mt-3">
-            <h2>Singleton Objects and Thread Synchronization</h2>
-        </div>
-        <div class="d-flex justify-content-end">
-            <h4>April 11, 2018</h4>
-        </div>
-        <p>
-            <span class="bold">Question:</span> What happens when a singleton object that is used for thread synchronization is set to point to a new instance?
-        </p>
-        <p>
-            <span class="bold">Answer:</span> Suppose there are threads that are blocked because they are waiting for another thread to release the lock
-            on the singleton object. If the singleton object is now pointing to a new instance, then all the threads that are
-            blocked will be waiting <span style="font-weight: bold">forever</span>.
-        </p>
-        <div class="d-flex justify-content-center">
-            <script src="https://gist.github.com/bjpeterdelacruz/b1a5b14f3d222fb30468b6edf4f3ce82.js"></script>
-        </div>
-        <div class="d-flex justify-content-center">
-            <a href="../index.html">Home</a>
+        <div class="content">
+            <div class="d-flex justify-content-center mt-3 pt-3">
+                <h2>Singleton Objects and Thread Synchronization</h2>
+            </div>
+            <div class="d-flex justify-content-end">
+                <h4>April 11, 2018</h4>
+            </div>
+            <p>
+                <span class="bold">Question:</span> What happens when a singleton object that is used for thread synchronization is set to point to a new instance?
+            </p>
+            <p>
+                <span class="bold">Answer:</span> The example code below introduces a race condition scenario. The <span class="class">Main</span> class creates 1000 sets of 1000 threads. Half of the threads (500 threads) execute <span class="object">runnableA</span>, invoking <span class="method">MyObject.doSomething("ThreadA", 100)</span> to increment the counter. The other half execute <span class="object">runnableB</span>, which invokes <span class="method">MyObject.reinitialize()</span> to set a new object to the lock variable within the synchronized block.
+            </p>
+            <p>
+                Since threads can execute concurrently, there is a possibility that a thread executing <span class="object">runnableA</span> acquires the lock before another thread executing <span class="object">runnableB</span>, causing the <span class="object">counter</span> to be incremented in a synchronized manner. However, if a thread executing <span class="object">runnableB</span> acquires the lock first and reassigns a new object to lock within the synchronized block, the threads executing <span class="object">runnableA</span> will no longer synchronize on the same lock object, potentially leading to a race condition.
+            </p>
+            <p>
+                Running the code multiple times may produce varying results. In some runs, a race condition may occur, resulting in the <span class="object">counter</span> value being different from the expected 150,000.
+            </p>
+            <div class="d-flex justify-content-center code">
+                <script src="https://gist.github.com/bjpeterdelacruz/b1a5b14f3d222fb30468b6edf4f3ce82.js"></script>
+            </div>
+            <div class="d-flex justify-content-center code">
+                <script src="https://gist.github.com/bjpeterdelacruz/a0e0859982100fcb6a0270501a316a45.js"></script>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a href="../index.html" class="btn btn-primary" role="button">Home</a>
+            </div>
         </div>
     </body>
 </html>

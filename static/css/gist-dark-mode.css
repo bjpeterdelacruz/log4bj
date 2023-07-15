@@ -1,0 +1,25 @@
+@import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/d49b91b3/stylesheets/idle-fingers.css');
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+.code {
+  font: 16px 'Open Sans', sans-serif;
+}
+.code .gist .gist-file {
+  border-color: #555 #555 #444
+}
+.code .gist .gist-data {
+  border-color: #555
+}
+.code .gist .gist-meta {
+  color: #ffffff;
+  background: #373737; 
+}
+.code .gist .gist-meta a {
+  color: #ffffff
+}
+.code .gist .gist-data .pl-s .pl-s1 {
+  color: #a5c261
+}
+.gist {
+  min-width: 1024px;
+}

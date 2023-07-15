@@ -13,9 +13,8 @@ a {
     font-weight: bold;
 }
 
-.title {
-    background-color: #7D3271;
-    color: #FFFFFF;
+a:hover {
+    color: #00266C;
 }
 
 @font-face {
@@ -29,7 +28,19 @@ a {
 }
 
 body {
+    background-color: #00266C;
     font-family: JostRegular;
+}
+
+.content {
+    background-color: rgba(255,255,255,0.75);
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+}
+
+.class, .method, .object {
+    font-family: JostBlack
 }
 
 h1, h2, h3, h4, .bold {
